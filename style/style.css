@@ -1,0 +1,43 @@
+body {
+  font-family: roboto;
+  background-color: rgba(238, 249, 191, 1);
+  text-align: center;
+}
+
+h1 {
+
+  font-weight: 700;
+  font-size: 56px;
+  letter-spacing: -0.04rem;
+  color: rgba(117, 183, 158, 1);
+  margin-top: 40px;
+  margin-bottom: 47px;
+
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: space-between;
+  margin: 0px 122px;
+
+}
+
+div {
+  background-color: rgba(167, 233, 175, 1);
+  border: 1px solid rgba(153, 206, 168, 1);
+  border-radius: 5px;
+  width: 117px;
+  height: 146px;
+  margin: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+
+}
