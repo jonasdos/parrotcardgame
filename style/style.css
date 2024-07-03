@@ -16,12 +16,20 @@ h1 {
 }
 
 main {
+  max-width: 100%;
   display: flex;
   flex-wrap: wrap;
   text-align: center;
-  justify-content: space-between;
-  margin: 0px 122px;
+  justify-content: center;
 
+
+}
+
+#campo {
+  max-width: 950px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 div {
@@ -34,10 +42,15 @@ div {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.6s;
 }
 
 img {
   width: 100px;
   height: 100px;
 
+}
+
+.flipCard {
+  transform: rotateY(180deg);
 }
