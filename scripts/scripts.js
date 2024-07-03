@@ -10,11 +10,21 @@ const maxWidth = {
   cards12: ['1050px', 6],
   cards14: ['1200px', 7]
 }
+const listCards = {
+  parrot1: ["bobrossparrot", "disponivel", 0],
+  parrot2: ["explodyparrot", "disponivel", 0],
+  parrot3: ["fiestaparrot", "disponivel", 0],
+  parrot4: ["metalparrot", "disponivel", 0],
+  parrot5: ["revertitparrot", "disponivel", 0],
+  parrot6: ["tripletsparrot", "disponivel", 0],
+  parrot7: ["unicornparrot", "disponivel", 0],
+}
+
 
 const campo = document.getElementById('campo')
 
 function solicitaCartas() {
-  let qtde = 8//prompt('Escolha com quantas cartas quer jogar. Pares de 4 até 14 cartas')
+  let qtde = 12//prompt('Escolha com quantas cartas quer jogar. Pares de 4 até 14 cartas')
   if (qtde > 3 && qtde < 15 && qtde % 2 === 0) {
     carregaCartas(qtde)
     tamanhoCampo(qtde)
@@ -30,12 +40,33 @@ function tamanhoCampo(qtde) {
 }
 
 function carregaCartas(qtde) {
-  for (i = 1; i < qtde; i++) {
-    campo.innerHTML += parrotCard
-  }
+  let listagem = []
+  while (listagem.length < qtde / 2) {
+    let n = aleatorio(1, 8)
+    if (listagem.includes(n)) {
 
+    } else {
+      listagem.push(n)
+
+    }
+  }
+  for (i = 0; i < listagem.length; i++) { listagem[i] = "parrot" + listagem[i] }
+  imprimeCartas(listagem)
 }
+
+function imprimeCartas(listagem) {
+
+  let cartinha = listagem[aleatorio(0, (listagem.length))]
+  console.log(listagem)
+  console.log(cartinha)
+}
+
+
 
 function flipCard(carta) {
   carta.classList.toggle('flipCard')
+}
+
+function aleatorio(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
 }
