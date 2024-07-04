@@ -1,7 +1,4 @@
-let parrotCard = `<div class="card" onclick="flipCard(this)">
-        <div class="card-face back"><img src="./assets/back.png"></div>
-        <div class="card-face front"><img src="./assets/bobrossparrot.gif"></div>
-      </div>`
+//variaveis 
 const maxWidth = {
   cards4: ['none', 2],
   cards6: ['none', 3],
@@ -19,12 +16,19 @@ const listCards = {
   parrot6: ["tripletsparrot", "disponivel", 0],
   parrot7: ["unicornparrot", "disponivel", 0],
 }
-
-
 const campo = document.getElementById('campo')
 
+let img1 = null
+let img2 = null
+let carta1 = null
+let carta2 = null
+let rodadas = 0
+let viradas = 0
+let totaljogo = 0
+
 function solicitaCartas() {
-  let qtde = 14//prompt('Escolha com quantas cartas quer jogar. Pares de 4 até 14 cartas')
+  let qtde = 8//prompt('Escolha com quantas cartas quer jogar. Pares de 4 até 14 cartas')
+  totaljogo = qtde
   if (qtde > 3 && qtde < 15 && qtde % 2 === 0) {
     carregaCartas(qtde)
     tamanhoCampo(qtde)
@@ -57,27 +61,101 @@ function carregaCartas(qtde) {
 function imprimeCartas(listagem) {
 
   while (campo.querySelectorAll('.card').length < (listagem.length * 2)) {
-    let cartinha = listagem[aleatorio(0, (listagem.length))]
-    if (listCards[cartinha][2] < 2) {
-      listCards[cartinha][2]++
-      campo.innerHTML += `<div class="card" onclick="flipCard(this)">
+    let parrotcard = listagem[aleatorio(0, (listagem.length))]
+    if (listCards[parrotcard][2] < 2) {
+      listCards[parrotcard][2]++
+      campo.innerHTML += `<div class="card">
         <div class="card-face back"><img src="./assets/back.png"></div>
-        <div class="card-face front"><img src="./assets/${listCards[cartinha][0]}.gif"></div>
+        <div class="card-face front"><img src="./assets/${listCards[parrotcard][0]}.gif"></div>
       </div>`
 
     }
 
   }
-  console.log(listCards)
+  iniciaJogo()
 }
 
-
-
-
-function flipCard(carta) {
-  carta.classList.toggle('flipCard')
-}
 
 function aleatorio(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
+}
+
+function iniciaJogo() {
+  let cartas = campo.querySelectorAll('.card')
+  for (i = 0; i < cartas.length; i++) {
+    cartas[i].addEventListener('click', seguracard)
+  }
+  console.log(`jogo iniciado: Quantidade de cartas: ${campo.querySelectorAll('.card').length}`)
+
+
+}
+
+
+function seguracard(e) {
+  flipCard(this)
+}
+let bloqueio = false
+function flipCard(carta) {
+  if (bloqueio) return;
+  if (img1 === null) {
+    rodadas++
+    carta1 = carta
+    img1 = carta.querySelector('.front img').src
+    carta.classList.toggle('flipCard')
+    carta1.removeEventListener('click', seguracard)
+  } else {
+    bloqueio = true
+    rodadas++
+    carta2 = carta
+    img2 = carta.querySelector('.front img').src
+    carta.classList.toggle('flipCard')
+    carta2.removeEventListener('click', seguracard)
+    comparaCards(img1 === img2)
+  }
+
+}
+
+function comparaCards(resultado) {
+
+  if (resultado) {
+    img1 = null
+    img2 = null
+    carta1 = null
+    carta2 = null
+    viradas += 2
+
+    if ((totaljogo - viradas) === 0) {
+      setTimeout(msgvitoria, 500)
+    } else {
+      continuaJogo()
+    }
+  } else {
+    setTimeout(reiniciacards, 1000)
+  }
+}
+
+function msgvitoria() {
+  alert(`Parabéns! Você venceu o jogo com ${rodadas} rodadas!`)
+  location.reload()
+
+}
+function continuaJogo() {
+  img1 = null
+  img2 = null
+  carta1 = null
+  carta2 = null
+  bloqueio = false
+}
+
+
+function reiniciacards() {
+  carta1.addEventListener('click', seguracard)
+  carta2.addEventListener('click', seguracard)
+  carta1.classList.remove('flipCard')
+  carta2.classList.remove('flipCard')
+  img1 = null
+  img2 = null
+  carta1 = null
+  carta2 = null
+  bloqueio = false
 }
