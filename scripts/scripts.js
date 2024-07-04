@@ -24,7 +24,7 @@ const listCards = {
 const campo = document.getElementById('campo')
 
 function solicitaCartas() {
-  let qtde = 12//prompt('Escolha com quantas cartas quer jogar. Pares de 4 até 14 cartas')
+  let qtde = 14//prompt('Escolha com quantas cartas quer jogar. Pares de 4 até 14 cartas')
   if (qtde > 3 && qtde < 15 && qtde % 2 === 0) {
     carregaCartas(qtde)
     tamanhoCampo(qtde)
@@ -56,10 +56,21 @@ function carregaCartas(qtde) {
 
 function imprimeCartas(listagem) {
 
-  let cartinha = listagem[aleatorio(0, (listagem.length))]
-  console.log(listagem)
-  console.log(cartinha)
+  while (campo.querySelectorAll('.card').length < (listagem.length * 2)) {
+    let cartinha = listagem[aleatorio(0, (listagem.length))]
+    if (listCards[cartinha][2] < 2) {
+      listCards[cartinha][2]++
+      campo.innerHTML += `<div class="card" onclick="flipCard(this)">
+        <div class="card-face back"><img src="./assets/back.png"></div>
+        <div class="card-face front"><img src="./assets/${listCards[cartinha][0]}.gif"></div>
+      </div>`
+
+    }
+
+  }
+  console.log(listCards)
 }
+
 
 
 
