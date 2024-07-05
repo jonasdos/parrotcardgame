@@ -27,7 +27,7 @@ let viradas = 0
 let totaljogo = 0
 
 function solicitaCartas() {
-  let qtde = 8//prompt('Escolha com quantas cartas quer jogar. Pares de 4 até 14 cartas')
+  let qtde = prompt('Escolha com quantas cartas quer jogar. Pares de 4 até 14 cartas')
   totaljogo = qtde
   if (qtde > 3 && qtde < 15 && qtde % 2 === 0) {
     carregaCartas(qtde)
